@@ -1,0 +1,2 @@
+# prometeo_team_tiriri
+Problem_statement_REAL-TIME INCIDENT REPORTING AND RESOURCE COORDINATION PLATFORM
