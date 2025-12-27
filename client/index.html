@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prometeo 2026 - Real-Time Incident Platform</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">🚨 Prometeo 2026</div>
+    <h1>Real-Time Incident Reporting & Coordination</h1>
+    <button id="toggle-view" class="admin-btn">Admin View</button>
+  </header>
+
+  <div class="main-layout">
+    <div id="map"></div>
+
+    <div class="sidebar">
+      <h2>Live Incidents <span id="count">0</span></h2>
+      <div id="incident-cards"></div>
+    </div>
+  </div>
+
+  <!-- Floating Report Button -->
+  <button id="float-report" class="floating-btn">📢 Report Incident</button>
+
+  <!-- Report Modal -->
+  <div id="report-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Report Incident</h2>
+      <form id="report-form">
+        <!-- Same form fields as before -->
+        <select id="type" required>...</select> <!-- full options -->
+        <textarea id="description" required></textarea>
+        <div class="location-input">...</div>
+        <select id="severity" required>...</select>
+        <input type="file" id="media" multiple>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
