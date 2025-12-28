@@ -1,44 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prometeo 2026 - Real-Time Incident Platform</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prometeo 2026 • Real-Time Emergency Platform</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <div class="logo">🚨 Prometeo 2026</div>
-    <h1>Real-Time Incident Reporting & Coordination</h1>
-    <button id="toggle-view" class="admin-btn">Admin View</button>
+    <div class="header-left">
+      <h1>Prometeo 2026</h1>
+      <p>Real-Time Incident Reporting & Resource Coordination</p>
+    </div>
+    <button id="toggle-view">Admin Mode</button>
   </header>
 
-  <div class="main-layout">
+  <div class="layout">
     <div id="map"></div>
-
+    
     <div class="sidebar">
-      <h2>Live Incidents <span id="count">0</span></h2>
+      <div class="sidebar-header">
+        <h2>Live Incidents <span id="count">0</span></h2>
+      </div>
       <div id="incident-cards"></div>
     </div>
   </div>
 
-  <!-- Floating Report Button -->
-  <button id="float-report" class="floating-btn">📢 Report Incident</button>
+  <button class="fab" id="open-modal">Report Incident</button>
 
-  <!-- Report Modal -->
-  <div id="report-modal" class="modal">
+  <div id="modal" class="modal">
     <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Report Incident</h2>
+      <span class="close">×</span>
+      <h2>Report an Incident</h2>
       <form id="report-form">
-        <!-- Same form fields as before -->
-        <select id="type" required>...</select> <!-- full options -->
-        <textarea id="description" required></textarea>
-        <div class="location-input">...</div>
-        <select id="severity" required>...</select>
-        <input type="file" id="media" multiple>
-        <button type="submit">Submit</button>
+        <select id="type" required>
+          <option value="" disabled selected>Select incident type</option>
+          <option>Road Accident</option>
+          <option>Fire</option>
+          <option>Medical Emergency</option>
+          <option>Natural Disaster</option>
+          <option>Gas Leak</option>
+          <option>Infrastructure Failure</option>
+          <option>Traffic Blockage</option>
+          <option>Public Safety Threat</option>
+        </select>
+
+        <textarea id="description" placeholder="Describe the incident..." required></textarea>
+
+        <div class="row">
+          <input type="number" step="any" id="lat" placeholder="Latitude" required>
+          <input type="number" step="any" id="lng" placeholder="Longitude" required>
+          <button type="button" id="get-location" class="small-btn">Use My Location</button>
+        </div>
+
+        <select id="severity" required>
+          <option value="low">Low</option>
+          <option value="medium" selected>Medium</option>
+          <option value="high">High (Image Required)</option>
+        </select>
+
+        <input type="file" id="media" multiple accept="image/*" />
+
+        <button type="submit" class="submit-btn">Submit Report</button>
       </form>
     </div>
   </div>

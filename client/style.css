@@ -1,80 +1,74 @@
-body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  margin: 0;
-  padding: 20px;
-  background: #f4f6f9;
-  color: #333;
-}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',sans-serif; background:#0f172a; color:#e2e8f0; height:100vh; overflow:hidden; }
 
 header {
-  text-align: center;
-  background: #0066ff;
-  color: white;
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 20px;
+  background:linear-gradient(135deg,#1e40af,#3b82f6);
+  padding:20px 30px;
+  display:flex; justify-content:space-between; align-items:center;
+  box-shadow:0 4px 20px rgba(0,0,0,0.3);
+}
+.header-left h1 { font-size:28px; font-weight:800; }
+.header-left p { font-size:14px; opacity:0.9; }
+
+#toggle-view {
+  background:rgba(255,255,255,0.2);
+  border:none; color:white; padding:10px 20px;
+  border-radius:50px; cursor:pointer; font-weight:bold;
 }
 
-h1 { margin: 0; font-size: 24px; }
+.layout { display:flex; height:calc(100vh - 90px); }
+#map { flex:7; background:#0f172a; }
 
-h2 { color: #0066ff; border-bottom: 2px solid #0066ff; padding-bottom: 5px; }
+.sidebar {
+  flex:3; background:#1e293b; padding:20px; overflow-y:auto;
+  border-left:4px solid #3b82f6;
+}
+.sidebar-header h2 { color:#60a5fa; text-align:center; margin-bottom:20px; }
 
-form, .filters {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  margin-bottom: 20px;
+#incident-cards { display:flex; flex-direction:column; gap:16px; }
+.card {
+  background:#1e293b; border-radius:12px; padding:16px;
+  border-left:5px solid #3b82f6; box-shadow:0 4px 15px rgba(0,0,0,0.4);
+  transition:all 0.3s;
+}
+.card:hover { transform:translateY(-4px); box-shadow:0 8px 25px rgba(59,130,246,0.3); }
+
+.card h3 { color:#60a5fa; margin-bottom:8px; }
+.severity { display:inline-block; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:bold; }
+.low { background:#22c55e; }
+.medium { background:#f59e0b; color:black; }
+.high { background:#ef4444; }
+
+.status { display:inline-block; padding:4px 12px; border-radius:20px; font-size:12px; margin:8px 0; }
+.Unverified { background:#64748b; }
+.needs-confirmation, .early-alert { background:#fb923c; }
+.Verified { background:#10b981; }
+.Resolved { background:#06b6d4; }
+
+.card img { max-width:100%; border-radius:8px; margin:8px 0; }
+
+.fab {
+  position:fixed; bottom:30px; right:30px;
+  width:70px; height:70px; border-radius:50%;
+  background:#3b82f6; color:white; border:none;
+  font-size:16px; cursor:pointer; font-weight:bold;
+  box-shadow:0 8px 25px rgba(59,130,246,0.5);
+  z-index:1000;
 }
 
-input, select, textarea, button {
-  width: 100%;
-  padding: 12px;
-  margin: 8px 0;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  box-sizing: border-box;
-  font-size: 16px;
+.modal { display:none; position:fixed; z-index:2000; inset:0;
+  background:rgba(0,0,0,0.8); justify-content:center; align-items:center; }
+.modal-content {
+  background:#1e293b; padding:30px; border-radius:16px; width:90%; max-width:500px;
+  color:white; position:relative;
 }
+.close { position:absolute; top:15px; right:20px; font-size:32px; cursor:pointer; color:#94a3b8; }
 
-button {
-  background: #0066ff;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
+input, select, textarea {
+  width:100%; padding:12px; margin:10px 0; border-radius:8px; border:none;
+  background:#334155; color:white;
 }
-
-button:hover { background: #0052cc; }
-
-.location-input {
-  display: grid;
-  grid-template-columns: 1fr 1fr auto;
-  gap: 8px;
+button.submit-btn, button.small-btn {
+  background:#3b82f6; color:white; cursor:pointer; font-weight:bold; padding:12px;
 }
-
-#map {
-  height: 500px;
-  border-radius: 10px;
-  margin: 20px 0;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-
-#incident-list {
-  list-style: none;
-  padding: 0;
-}
-
-#incident-list li {
-  background: white;
-  padding: 15px;
-  margin: 10px 0;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.unverified { border-left: 6px solid red; }
-.needs-confirmation { border-left: 6px solid orange; }
-.verified { border-left: 6px solid green; }
-
-img { max-width: 150px; border-radius: 6px; margin: 5px; }
+.row { display:grid; grid-template-columns:1fr 1fr auto; gap:10px; align-items:center; }
