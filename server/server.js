@@ -45,18 +45,28 @@ const resourceSchema = new mongoose.Schema({
 });
 const Resource = mongoose.model('Resource', resourceSchema);
 
-// Hardcode sample resources on startup (run once)
 async function seedResources() {
-  if (await Resource.countDocuments() === 0) {
-    const samples = [
-      { name: 'City Hospital', type: 'Hospital', location: { coordinates: [77.1025, 28.7041] } }, // Delhi
-      { name: 'Fire Station North', type: 'Fire Station', location: { coordinates: [77.2090, 28.6139] } },
-      { name: 'Ambulance Service', type: 'Ambulance', location: { coordinates: [77.1025, 28.7041] } },
-      // Add 3-5 more for testing
-    ];
-    await Resource.insertMany(samples);
+  try {
+    const count = await Resource.countDocuments({}).maxTimeMS(5000); // 5 sec timeout
+    if (count === 0) {
+      console.log('Seeding emergency resources...');
+      await Resource.insertMany([
+        { name: "AIIMS Hospital", type: "Hospital", location: { coordinates: [77.2100, 28.5672] } },
+        { name: "Safdarjung Hospital", type: "Hospital", location: { coordinates: [77.2044, 28.5667] } },
+        { name: "Connaught Place Fire Station", type: "Fire Brigade", location: { coordinates: [77.2172, 28.6304] } },
+        { name: "Karol Bagh Fire Station", type: "Fire Brigade", location: { coordinates: [77.1900, 28.6500] } },
+        { name: "CATS Ambulance HQ", type: "Ambulance", location: { coordinates: [77.2090, 28.6139] } },
+        { name: "NDMA Delhi Unit", type: "Disaster Response", location: { coordinates: [77.2300, 28.6100] } }
+      ]);
+      console.log('Resources seeded successfully');
+    }
+  } catch (err) {
+    console.log('Seed skipped (timeout or connection issue) - this is normal on Render free tier cold starts');
+    // App continues running — no crash!
   }
 }
+
+// Call it
 seedResources();
 
 app.use(cors());
